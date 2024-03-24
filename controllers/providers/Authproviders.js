@@ -5,19 +5,18 @@ import createError from "../../utils/createError.js";
 
 export const register = async (req, res, next) => {
   try {
-    console.log("body", req.body);
+    // console.log("body", req.body);
     const hash = bcrypt.hashSync(req.body.password, 5);
     const newProvider = new Provider({
-      // ...req.body,
+      ...req.body,
       password: hash,
-      name: req.body.name,
-      email: req.body.email,
-      location: req.body.location,
     });
-    console.log("newuser", newUser);
+    console.log("newuser", newProvider);
     await newProvider.save();
-    res.status(200).send("success");
+    res.status(200).send(newProvider);
   } catch (err) {
+    console.error(err); // Log the complete error object
+    next(createError(500, "Registration failed!")); // Pass a custom error
     next(err);
   }
 };
