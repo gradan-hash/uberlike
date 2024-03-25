@@ -8,10 +8,9 @@ const RidesSchema = new Schema(
       required: true,
     },
     carName: {
-      
       type: String,
       required: true,
-      
+
       trim: true,
     },
     groupSize: {
@@ -25,7 +24,11 @@ const RidesSchema = new Schema(
 
     carImageUrl: {
       type: String,
-      required: true, 
+      required: true,
+    },
+    price: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }
