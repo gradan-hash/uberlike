@@ -37,7 +37,7 @@ const userSchema = new Schema(
       unique: true,
     },
     location: {
-      type: LocationSchema, // Use the defined LocationSchema for nested structure
+      type: LocationSchema, 
       required: true,
     },
   },

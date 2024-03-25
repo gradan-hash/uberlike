@@ -6,6 +6,7 @@ import cors from "cors";
 import AuthRoute from "./routes/users/Auth.js";
 import AuthRoutePro from "./routes/providers/Authproviders.js";
 import ItemsRoute from "./routes/providers/items.js";
+import OrderRoute from "./routes/users/Order.js";
 
 const app = express();
 dotenv.config();
@@ -33,7 +34,7 @@ app.use(cookieParser());
 //clients
 
 app.use("/api/clients", AuthRoute);
-// app.use("/api/clients", MessageRoute);
+app.use("/api/clients", OrderRoute);
 // app.use("/api/clients", TripsAuthRoute);
 
 //providers
