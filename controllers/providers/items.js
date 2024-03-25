@@ -1,9 +1,9 @@
-import Rides from "../../models/providers/Rides";
-import Provider from "../../models/providers/Providers";
-import createError from "../../utils/createError";
+import Rides from "../../models/providers/Rides.js";
+import Provider from "../../models/providers/Providers.js";
+import createError from "../../utils/createError.js";
 
 export const createProducts = async (req, res, next) => {
-  // console.log(req.body);
+  console.log(req.body);
   const newItems = new Rides({
     ...req.body,
   });
