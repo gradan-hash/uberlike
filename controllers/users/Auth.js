@@ -14,6 +14,8 @@ export const register = async (req, res, next) => {
     await newUser.save();
     res.status(200).send("success");
   } catch (err) {
+    console.error(err); // Log the complete error object
+    next(createError(500, "Registration failed!"));
     next(err);
   }
 };
@@ -22,7 +24,6 @@ export const login = async (req, res, next) => {
   try {
     // Attempt to find the user by email
     const User = await user.findOne({ email: req.body.email });
-
     // If no user is found, return a 404 error
     if (!User) return next(createError(404, "user not found"));
 
@@ -46,6 +47,7 @@ export const login = async (req, res, next) => {
       .status(200)
       .send({ msg: "login success", ...info });
   } catch (err) {
+    console.log(err);
     // Pass any errors to the error handling middleware
     next(err);
   }

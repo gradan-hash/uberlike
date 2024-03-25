@@ -18,7 +18,7 @@ const ProviderSchema = new Schema(
       // Updated from username to name
       type: String,
       required: true,
-      unique: true,
+      // unique: true,
       trim: true, // Added trim to remove whitespace
     },
     phonenumber: {

@@ -1,9 +1,19 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
+const LocationSchema = new Schema({
+  latitude: {
+    type: Number,
+    required: true,
+  },
+  longitude: {
+    type: Number,
+    required: true,
+  },
+});
 const userSchema = new Schema(
   {
-    username: {
+    name: {
       type: String,
       required: true,
     },
@@ -27,7 +37,7 @@ const userSchema = new Schema(
       unique: true,
     },
     location: {
-      type: String,
+      type: LocationSchema, // Use the defined LocationSchema for nested structure
       required: true,
     },
   },

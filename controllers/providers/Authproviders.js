@@ -23,8 +23,11 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
+    // console.log(req.body);
     // Attempt to find the user by email
     const ProviderL = await Provider.findOne({ email: req.body.email });
+
+    // console.log("ProviderL", ProviderL);
 
     // If no user is found, return a 404 error
     if (!ProviderL) return next(createError(404, "Provider not found"));
@@ -38,7 +41,7 @@ export const login = async (req, res, next) => {
 
     // Exclude the password from the user object to be sent back
     const { password, ...info } = ProviderL._doc;
-
+    // console.log("...info", ...info);
     // Send the token in a cookie and the user info in the response body
     res
       .cookie("accessToken", token, {
@@ -47,9 +50,10 @@ export const login = async (req, res, next) => {
         secure: true,
       })
       .status(200)
-      .send({ msg: "login success", ...info });
+      .send({ msg: "login success", ProviderL });
   } catch (err) {
-    // Pass any errors to the error handling middleware
+    // Pass any errors to the error handling
+    console.log(err);
     next(err);
   }
 };
