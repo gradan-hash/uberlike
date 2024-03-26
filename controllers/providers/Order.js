@@ -57,14 +57,17 @@ export const getOrder = async (req, res, next) => {
 
 // Get all orders for a specific provider by providerId
 export const GetAllOrder = async (req, res, next) => {
-  // console.log(req.params.providerId);
-  // const providerId = req.params.providerId;
   try {
     const orders = await Order.find({
       ownerId: req.params.providerId,
+      status: "Unconfirmed", // Add the condition for status
     });
-    if (!orders) return "No information";
-    // console.log(orders);
+
+    // Check if no orders are found
+    if (!orders || orders.length === 0) {
+      return res.status(404).send("No unconfirmed orders found.");
+    }
+
     res.status(200).send(orders);
   } catch (error) {
     next(error); // Pass error to error handling middleware
