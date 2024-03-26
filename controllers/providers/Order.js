@@ -42,7 +42,6 @@ export const UpdateCreateOrder = async (req, res, next) => {
   }
 };
 
-
 // Get a single order by ID
 export const getOrder = async (req, res, next) => {
   try {
@@ -58,9 +57,12 @@ export const getOrder = async (req, res, next) => {
 
 // Get all orders for a specific provider by providerId
 export const GetAllOrder = async (req, res, next) => {
-  const providerId = req.params.providerId;
+  // console.log(req.body);
+  console.log(req.params);
+  const { providerId } = req.params;
   try {
-    const orders = await Order.find({ ownerId: providerId });
+    const orders = await Order.find({ ownerId: providerId }).populate("userid");
+    console.log(orders);
     res.status(200).send(orders);
   } catch (error) {
     next(error); // Pass error to error handling middleware

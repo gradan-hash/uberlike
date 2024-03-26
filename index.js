@@ -6,7 +6,9 @@ import cors from "cors";
 import AuthRoute from "./routes/users/Auth.js";
 import AuthRoutePro from "./routes/providers/Authproviders.js";
 import ItemsRoute from "./routes/providers/items.js";
+import clientItemRoute from "./routes/users/items.js";
 import OrderRoute from "./routes/users/Order.js";
+import OrderProvider from "./routes/providers/Order.js";
 
 const app = express();
 dotenv.config();
@@ -35,12 +37,12 @@ app.use(cookieParser());
 
 app.use("/api/clients", AuthRoute);
 app.use("/api/clients", OrderRoute);
-// app.use("/api/clients", TripsAuthRoute);
+app.use("/api/clients", clientItemRoute);
 
 //providers
 app.use("/api/providers", AuthRoutePro);
 app.use("/api/providers", ItemsRoute);
-// app.use("/api/providers", ItemsRoute);
+app.use("/api/providers", OrderProvider);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
