@@ -22,14 +22,14 @@ export const createOrder = async (req, res, next) => {
 // Update an existing order
 export const UpdateCreateOrder = async (req, res, next) => {
   const orderId = req.body.orderid;
-  const { amountPaid, price } = req.body;
+  const { amountPaid } = req.body;
   try {
     // Find the order by ID and update its details
     const updatedOrder = await Order.findByIdAndUpdate(
       orderId,
       {
         amountPaid, // Update amountPaid field
-        price, // Update price field
+        // Update price field
       },
       { new: true }
     );
@@ -57,17 +57,14 @@ export const getOrder = async (req, res, next) => {
 
 // Get all orders for a specific provider by providerId
 export const GetAllOrder = async (req, res, next) => {
+  // console.log(req.params.providerId);
+  // const providerId = req.params.providerId;
   try {
     const orders = await Order.find({
       ownerId: req.params.providerId,
-      status: "Unconfirmed", // Add the condition for status
     });
-
-    // Check if no orders are found
-    if (!orders || orders.length === 0) {
-      return res.status(404).send("No unconfirmed orders found.");
-    }
-
+    if (!orders) return "No information";
+    // console.log(orders);
     res.status(200).send(orders);
   } catch (error) {
     next(error); // Pass error to error handling middleware

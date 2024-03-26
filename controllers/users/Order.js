@@ -22,14 +22,14 @@ export const createOrder = async (req, res, next) => {
 // Update an existing order
 export const UpdateCreateOrder = async (req, res, next) => {
   const orderId = req.body.orderid;
-  const { amountPaid, price } = req.body;
+  const { amountPaid } = req.body;
   try {
     // Find the order by ID and update its details
     const updatedOrder = await Order.findByIdAndUpdate(
       orderId,
       {
         amountPaid, // Update amountPaid field
-        price, // Update price field
+        // Update price field
       },
       { new: true }
     );
@@ -41,7 +41,6 @@ export const UpdateCreateOrder = async (req, res, next) => {
     next(error);
   }
 };
-
 
 // Get a single order by ID
 export const getOrder = async (req, res, next) => {
@@ -58,9 +57,14 @@ export const getOrder = async (req, res, next) => {
 
 // Get all orders for a specific provider by providerId
 export const GetAllOrder = async (req, res, next) => {
-  const providerId = req.params.providerId;
+  // console.log(req.params.providerId);
+  // const providerId = req.params.providerId;
   try {
-    const orders = await Order.find({ ownerId: providerId });
+    const orders = await Order.find({
+      userid: req.params.userId,
+    });
+    if (!orders) return "No information";
+    // console.log(orders);
     res.status(200).send(orders);
   } catch (error) {
     next(error); // Pass error to error handling middleware
@@ -69,16 +73,22 @@ export const GetAllOrder = async (req, res, next) => {
 
 // Update an existing order
 export const UpdateOrder = async (req, res, next) => {
-  const orderId = req.params.orderId;
+  const { orderId } = req.params; // Correctly extracting orderId from req.params
+  console.log(req.body);
+
   try {
+    // Make sure the update is applied correctly by specifying the orderId
     const updatedOrder = await Order.findByIdAndUpdate(orderId, req.body, {
       new: true,
     });
+
     if (!updatedOrder) {
-      throw createError(404, "Order not found");
+      return res.status(404).send({ message: "Order not found" });
     }
+
     res.status(200).send(updatedOrder);
   } catch (error) {
-    next(error); // Pass error to error handling middleware
+    console.log(error);
+    next(error);
   }
 };
