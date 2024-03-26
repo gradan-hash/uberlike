@@ -71,6 +71,22 @@ export const GetAllOrder = async (req, res, next) => {
   }
 };
 
+export const GetAllOrderConfirmed = async (req, res, next) => {
+  // console.log(req.params.providerId);
+  // const providerId = req.params.providerId;
+  try {
+    const orders = await Order.find({
+      ownerId: req.params.providerId,
+      status: "Confirmed",
+    });
+    if (!orders) return "No information";
+    // console.log(orders);
+    res.status(200).send(orders);
+  } catch (error) {
+    next(error); // Pass error to error handling middleware
+  }
+};
+
 // Update an existing order
 export const UpdateOrder = async (req, res, next) => {
   const { orderId } = req.params; // Correctly extracting orderId from req.params

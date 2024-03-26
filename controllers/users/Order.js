@@ -42,6 +42,34 @@ export const UpdateCreateOrder = async (req, res, next) => {
   }
 };
 
+export const UpdateCreateOrderPaid = async (req, res, next) => {
+  console.log(req.body);
+  const orderId = req.body.orderid;
+  const userId = req.body.userid;
+  const amountPaid = req.body.amountPaid;
+  try {
+    // Find the order by ID and update its details
+    const updatedOrder = await Order.findOneAndUpdate(
+      {
+        _id: orderId, // Find by order ID
+        userId: userId, // ... and matching user ID
+        status: "Confirmed", // ... and with status "Confirmed"
+      },
+      {
+        amountPaid: amountPaid,
+      },
+      { new: true }
+    );
+    if (!updatedOrder) {
+      throw createError(404, "Order not found");
+    }
+    console.log("updatedOrder", updatedOrder);
+    res.status(200).send(updatedOrder);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Get a single order by ID
 export const getOrder = async (req, res, next) => {
   try {
@@ -67,6 +95,23 @@ export const GetAllOrder = async (req, res, next) => {
     // console.log(orders);
     res.status(200).send(orders);
   } catch (error) {
+    next(error); // Pass error to error handling middleware
+  }
+};
+
+export const GetAllOrderConfirmed = async (req, res, next) => {
+  // console.log(req.params);
+  // const providerId = req.params.providerId;
+  try {
+    const orders = await Order.find({
+      userid: req.params.userId,
+      status: "Confirmed",
+    });
+    if (!orders) return "No information";
+    // console.log(orders);
+    res.status(200).send(orders);
+  } catch (error) {
+    console.log(error);
     next(error); // Pass error to error handling middleware
   }
 };
