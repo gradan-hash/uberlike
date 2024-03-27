@@ -23,13 +23,14 @@ export const createOrder = async (req, res, next) => {
 export const UpdateCreateOrder = async (req, res, next) => {
   const orderId = req.body.orderid;
   const { amountPaid } = req.body;
+  const { price } = req.body;
   try {
     // Find the order by ID and update its details
     const updatedOrder = await Order.findByIdAndUpdate(
       orderId,
       {
-        amountPaid, // Update amountPaid field
-        // Update price field
+        amountPaid,
+        price,
       },
       { new: true }
     );
@@ -42,6 +43,7 @@ export const UpdateCreateOrder = async (req, res, next) => {
   }
 };
 
+// update after payment
 export const UpdateCreateOrderPaid = async (req, res, next) => {
   console.log(req.body);
   const orderId = req.body.orderid;
@@ -90,6 +92,24 @@ export const GetAllOrder = async (req, res, next) => {
   try {
     const orders = await Order.find({
       userid: req.params.userId,
+      status: "Uncornfirmed",
+    });
+    if (!orders) return "No information";
+    // console.log(orders);
+    res.status(200).send(orders);
+  } catch (error) {
+    next(error); // Pass error to error handling middleware
+  }
+};
+
+// Get all orders for a specific provider by providerId
+export const GetAllcompletedOrder = async (req, res, next) => {
+  // console.log(req.params.providerId);
+  // const providerId = req.params.providerId;
+  try {
+    const orders = await Order.find({
+      userid: req.params.userId,
+      status: "Completed",
     });
     if (!orders) return "No information";
     // console.log(orders);

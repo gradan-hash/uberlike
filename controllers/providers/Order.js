@@ -62,6 +62,24 @@ export const GetAllOrder = async (req, res, next) => {
   try {
     const orders = await Order.find({
       ownerId: req.params.providerId,
+      status: "Uncornfirmed",
+    });
+    if (!orders) return "No information";
+    // console.log(orders);
+    res.status(200).send(orders);
+  } catch (error) {
+    next(error); // Pass error to error handling middleware
+  }
+};
+
+// Get all orders for a specific provider by providerId
+export const GetAllcompletedOrder = async (req, res, next) => {
+  // console.log(req.params.providerId);
+  // const providerId = req.params.providerId;
+  try {
+    const orders = await Order.find({
+      ownerId: req.params.providerId,
+      status: "Completed",
     });
     if (!orders) return "No information";
     // console.log(orders);
@@ -72,11 +90,11 @@ export const GetAllOrder = async (req, res, next) => {
 };
 
 export const GetAllOrderConfirmed = async (req, res, next) => {
-  // console.log(req.params.providerId);
+  console.log(req.params);
   // const providerId = req.params.providerId;
   try {
     const orders = await Order.find({
-      ownerId: req.params.providerId,
+      _id: req.params.id,
       status: "Confirmed",
     });
     if (!orders) return "No information";
@@ -89,6 +107,28 @@ export const GetAllOrderConfirmed = async (req, res, next) => {
 
 // Update an existing order
 export const UpdateOrder = async (req, res, next) => {
+  const { orderId } = req.params; // Correctly extracting orderId from req.params
+  console.log(req.body);
+
+  try {
+    // Make sure the update is applied correctly by specifying the orderId
+    const updatedOrder = await Order.findByIdAndUpdate(orderId, req.body, {
+      new: true,
+    });
+
+    if (!updatedOrder) {
+      return res.status(404).send({ message: "Order not found" });
+    }
+
+    res.status(200).send(updatedOrder);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// Update an existing order
+export const CompleteOrder = async (req, res, next) => {
   const { orderId } = req.params; // Correctly extracting orderId from req.params
   console.log(req.body);
 
