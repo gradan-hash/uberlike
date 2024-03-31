@@ -29,8 +29,8 @@ export const UpdateCreateOrder = async (req, res, next) => {
     const updatedOrder = await Order.findByIdAndUpdate(
       orderId,
       {
-        amountPaid,
-        price,
+        amountPaid: amountPaid,
+        price: price,
       },
       { new: true }
     );
