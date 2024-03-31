@@ -92,7 +92,7 @@ export const GetAllOrder = async (req, res, next) => {
   try {
     const orders = await Order.find({
       userid: req.params.userId,
-      status: "Uncornfirmed",
+      status: { $in: ["Confirmed", "Unconfirmed"] },
     });
     if (!orders) return "No information";
     // console.log(orders);
@@ -124,7 +124,7 @@ export const GetAllOrderConfirmed = async (req, res, next) => {
   // const providerId = req.params.providerId;
   try {
     const orders = await Order.find({
-      userid: req.params.userId,
+      _id: req.params.id,
       status: "Confirmed",
     });
     if (!orders) return "No information";

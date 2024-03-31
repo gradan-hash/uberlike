@@ -9,7 +9,9 @@ import ItemsRoute from "./routes/providers/items.js";
 import clientItemRoute from "./routes/users/items.js";
 import OrderRoute from "./routes/users/Order.js";
 import OrderProvider from "./routes/providers/Order.js";
-
+import AdminAuth from "./routes/Admin/Auth.js";
+import UsersRoute from "./routes/Admin/Client.js";
+import ProvidersRoute from "./routes/Admin/Providers.js";
 const app = express();
 dotenv.config();
 mongoose.set("strictQuery", true);
@@ -24,9 +26,22 @@ const connect = async () => {
 };
 
 app.use(
-  cors({
-    origin: "*",
-    credentials: true,
+  cors((req, callback) => {
+    const corsOptions = {
+      credentials: true, // Reflect the request's credentials (cookies, authorization headers, etc.)
+    };
+
+    // Allow all origins or specifically localhost:5173
+    if (
+      req.header("Origin") === "http://localhost:5173" ||
+      req.header("Origin") === "https://localhost:5173"
+    ) {
+      corsOptions.origin = true; // Reflect the request origin, as defined by `req.header('Origin')`
+    } else {
+      corsOptions.origin = "*"; // Allow all origins
+    }
+
+    callback(null, corsOptions); // Callback expects two parameters: error and options
   })
 );
 
@@ -43,6 +58,12 @@ app.use("/api/clients", clientItemRoute);
 app.use("/api/providers", AuthRoutePro);
 app.use("/api/providers", ItemsRoute);
 app.use("/api/providers", OrderProvider);
+
+//admin
+
+app.use("/api/admin", AdminAuth);
+app.use("/api/admin", UsersRoute);
+app.use("/api/admin", ProvidersRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

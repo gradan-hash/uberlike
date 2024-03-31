@@ -12,8 +12,8 @@ const router = express.Router();
 router.post("/postOrder", createOrder);
 router.post("/updateOrder", UpdateCreateOrder);
 router.get("/getpickup/:userId", GetAllOrder);
-router.get("/getcompleted/:providerId", GetAllcompletedOrder);
-router.get("/getpickupconfirmed/:userId", GetAllOrderConfirmed);
+router.get("/getcompleted/:userId", GetAllcompletedOrder);
+router.get("/getpickupconfirmed/:id", GetAllOrderConfirmed);
 router.post("/updatefinishorder", UpdateCreateOrderPaid);
 
 export default router;

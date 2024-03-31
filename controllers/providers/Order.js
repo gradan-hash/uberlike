@@ -66,6 +66,7 @@ export const GetAllOrder = async (req, res, next) => {
     });
     if (!orders) return "No information";
     // console.log(orders);
+
     res.status(200).send(orders);
   } catch (error) {
     next(error); // Pass error to error handling middleware
