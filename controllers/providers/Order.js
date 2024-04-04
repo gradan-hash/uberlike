@@ -73,20 +73,37 @@ export const GetAllOrder = async (req, res, next) => {
   }
 };
 
-// Get all orders for a specific provider by providerId
-export const GetAllcompletedOrder = async (req, res, next) => {
-  // console.log(req.params.providerId);
-  // const providerId = req.params.providerId;
+//completed
+export const GetAllCompletedOrder = async (req, res, next) => {
   try {
     const orders = await Order.find({
       ownerId: req.params.providerId,
       status: "Completed",
     });
-    if (!orders) return "No information";
-    // console.log(orders);
+
+    if (!orders.length) {
+      // Check if orders were found
+      return res.status(404).send({ message: "No completed orders found" });
+    }
+
+    const userIds = orders.map((order) => order.userid);
+    const ownerIds = orders.map((order) => order.ownerId);
+
+    const [userDetails, ownerDetails] = await Promise.all([
+      // Fetch details simultaneously
+      Users.find({ _id: { $in: userIds } }),
+      Providers.find({ _id: { $in: ownerIds } }),
+    ]);
+
+    const response = {
+      orders: orders,
+      userDetails: userDetails,
+      ownerDetails: ownerDetails,
+    };
+
     res.status(200).send(orders);
   } catch (error) {
-    next(error); // Pass error to error handling middleware
+    next(error);
   }
 };
 
