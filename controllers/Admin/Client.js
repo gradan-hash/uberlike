@@ -16,7 +16,8 @@ export const GetAllUsers = async (req, res, next) => {
 };
 export const DeleteUser = async (req, res, next) => {
   try {
-    const userId = req.params.id; // Assuming you're passing the user ID in the URL
+    const userId = req.params.userId; // Assuming you're passing the user ID in the URL
+    console.log(userId);
     const deletedUser = await user.findByIdAndDelete(userId);
     if (!deletedUser) throw createError(404, "User not found");
 
