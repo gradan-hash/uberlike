@@ -65,7 +65,7 @@ app.use("/api/providers", OrderProvider);
 app.use("/api/admin", AdminAuth);
 app.use("/api/admin", UsersRoute);
 app.use("/api/admin", ProvidersRoute);
-app.use("api/admin", OrderAdminRoute);
+app.use("/api/admin", OrderAdminRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
