@@ -12,6 +12,7 @@ import OrderProvider from "./routes/providers/Order.js";
 import AdminAuth from "./routes/Admin/Auth.js";
 import UsersRoute from "./routes/Admin/Client.js";
 import ProvidersRoute from "./routes/Admin/Providers.js";
+import OrderAdminRoute from "./routes/Admin/Orders.js";
 const app = express();
 dotenv.config();
 mongoose.set("strictQuery", true);
@@ -64,6 +65,7 @@ app.use("/api/providers", OrderProvider);
 app.use("/api/admin", AdminAuth);
 app.use("/api/admin", UsersRoute);
 app.use("/api/admin", ProvidersRoute);
+app.use("api/admin", OrderAdminRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
