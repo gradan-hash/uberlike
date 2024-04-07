@@ -45,6 +45,8 @@ export const registerProviderRating = async (req, res, next) => {
 
 //from the provider
 export const registerUserRating = async (req, res, next) => {
+  console.log(req.body);
+  
   try {
     const { userid, ownerId, rating, review } = req.body;
     if (!userid || !ownerId || !rating || !review) {
@@ -63,7 +65,7 @@ export const registerUserRating = async (req, res, next) => {
     await newRating.save();
 
     // Calculate the total rating
-    const ratings = await Rating.find({ ownerId: ownerId });
+    const ratings = await Rating.find({ userid: userid });
     let totalRating = 0;
     ratings.forEach((rating) => {
       totalRating += rating.rating;
@@ -71,7 +73,7 @@ export const registerUserRating = async (req, res, next) => {
     const averageRating = totalRating / ratings.length;
 
     // Update the provider's rating in the Provider table
-    await user.findByIdAndUpdate(ownerId, {
+    await user.findByIdAndUpdate(userid, {
       $set: { rating: averageRating },
     });
 

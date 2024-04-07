@@ -10,9 +10,9 @@ import {
 const router = express.Router();
 
 router.post("/ratingprovider", registerProviderRating);
-router.get("/mediumratingowner", getRatingOwner);
+router.get("/mediumratingowner/:ownerid", getRatingOwner);
 
 router.post("/ratingclient", registerUserRating);
-router.get("/mediumratingowner", getRatingUser);
+router.get("/mediumratingowner/:userid", getRatingUser);
 
 export default router;
