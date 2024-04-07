@@ -45,7 +45,7 @@ export const UpdateCreateOrder = async (req, res, next) => {
 
 // update after payment
 export const UpdateCreateOrderPaid = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const orderId = req.body.orderid;
   const userId = req.body.userid;
   const amountPaid = req.body.amountPaid;
@@ -65,7 +65,7 @@ export const UpdateCreateOrderPaid = async (req, res, next) => {
     if (!updatedOrder) {
       throw createError(404, "Order not found");
     }
-    console.log("updatedOrder", updatedOrder);
+    // console.log("updatedOrder", updatedOrder);
     res.status(200).send(updatedOrder);
   } catch (error) {
     next(error);

@@ -42,7 +42,7 @@ const userSchema = new Schema(
     },
     rating: {
       type: Number,
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }

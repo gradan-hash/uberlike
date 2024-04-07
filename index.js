@@ -13,6 +13,8 @@ import AdminAuth from "./routes/Admin/Auth.js";
 import UsersRoute from "./routes/Admin/Client.js";
 import ProvidersRoute from "./routes/Admin/Providers.js";
 import OrderAdminRoute from "./routes/Admin/Orders.js";
+import RatingUserRoute from "./routes/rating/rating.js";
+import RatingProvider from "./routes/rating/rating.js";
 const app = express();
 dotenv.config();
 mongoose.set("strictQuery", true);
@@ -54,11 +56,13 @@ app.use(cookieParser());
 app.use("/api/clients", AuthRoute);
 app.use("/api/clients", OrderRoute);
 app.use("/api/clients", clientItemRoute);
+app.use("/api/clients", RatingUserRoute);
 
 //providers
 app.use("/api/providers", AuthRoutePro);
 app.use("/api/providers", ItemsRoute);
 app.use("/api/providers", OrderProvider);
+app.use("/api/providers", RatingProvider);
 
 //admin
 

@@ -108,7 +108,7 @@ export const GetAllCompletedOrder = async (req, res, next) => {
 };
 
 export const GetAllOrderConfirmed = async (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   // const providerId = req.params.providerId;
   try {
     const orders = await Order.find({
@@ -126,7 +126,7 @@ export const GetAllOrderConfirmed = async (req, res, next) => {
 // Update an existing order
 export const UpdateOrder = async (req, res, next) => {
   const { orderId } = req.params; // Correctly extracting orderId from req.params
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     // Make sure the update is applied correctly by specifying the orderId
