@@ -13,6 +13,6 @@ router.post("/ratingprovider", registerProviderRating);
 router.get("/mediumratingowner/:ownerid", getRatingOwner);
 
 router.post("/ratingclient", registerUserRating);
-router.get("/mediumratingowner/:userid", getRatingUser);
+router.get("/mediumratinguser/:userid", getRatingUser);
 
 export default router;

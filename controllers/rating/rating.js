@@ -46,7 +46,7 @@ export const registerProviderRating = async (req, res, next) => {
 //from the provider
 export const registerUserRating = async (req, res, next) => {
   console.log(req.body);
-  
+
   try {
     const { userid, ownerId, rating, review } = req.body;
     if (!userid || !ownerId || !rating || !review) {
@@ -90,7 +90,7 @@ export const getRatingUser = async (req, res, next) => {
     const { userid } = req.params;
 
     // Find ratings associated with the provided userid
-    const ratings = await Rating.find({ userid });
+    const ratings = await user.find({ userid });
 
     if (!ratings || ratings.length === 0) {
       return res
@@ -112,7 +112,7 @@ export const getRatingOwner = async (req, res, next) => {
     const { ownerid } = req.params;
 
     // Find ratings associated with the provided ownerid
-    const ratings = await Rating.find({ ownerid });
+    const ratings = await Providers.find({ ownerid });
 
     if (!ratings || ratings.length === 0) {
       return res
