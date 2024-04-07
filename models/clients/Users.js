@@ -37,7 +37,11 @@ const userSchema = new Schema(
       unique: true,
     },
     location: {
-      type: LocationSchema, 
+      type: LocationSchema,
+      required: true,
+    },
+    rating: {
+      type: Number,
       required: true,
     },
   },

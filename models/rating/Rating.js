@@ -5,6 +5,7 @@ const RatingSchema = new Schema(
   {
     userid: {
       type: String,
+
       required: true,
     },
     providerid: {
@@ -13,7 +14,7 @@ const RatingSchema = new Schema(
       unique: true,
     },
     rating: {
-      type: String,
+      type: Number,
       required: true,
     },
     review: {
