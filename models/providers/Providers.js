@@ -43,6 +43,10 @@ const ProviderSchema = new Schema(
       type: String,
       required: false, // You could also set a default value if there's a default image
     },
+    rating: {
+      type: Number,
+      required: false,
+    },
   },
   { timestamps: true }
 );

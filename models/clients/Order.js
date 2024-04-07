@@ -64,6 +64,7 @@ const userSchema = new Schema(
       required: false,
       default: "Uncornfirmed",
     },
+   
   },
   { timestamps: true }
 );

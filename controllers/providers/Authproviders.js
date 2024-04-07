@@ -67,3 +67,37 @@ export const logout = async (req, res, next) => {
     .status(200)
     .send("user has been logged out");
 };
+
+// Update user details
+export const UpdateProvider = async (req, res, next) => {
+  const userid = req.body.userid;
+  const rating = req.body.rating;
+  const review = req.body.review;
+
+  if (!userid) {
+    return res.status(400).send({ message: "User ID is required" });
+  }
+
+  // Input Validation (consider adding it)
+  // Example:
+  if (typeof rating !== "number" || rating < 0 || rating > 5) {
+    return res.status(400).send({ message: "Invalid rating provided" });
+  }
+
+  try {
+    const updatedProvider = await Provider.findByIdAndUpdate(
+      userid, // No need for '_id:' prefix
+      { rating, review },
+      { new: true, runValidators: true } // Add runValidators for data consistency
+    );
+
+    if (!updatedProvider) {
+      return res.status(404).send({ message: "Provider not found" }); // Change to 'Provider' for clarity
+    }
+
+    res.status(200).send(updatedprovider);
+  } catch (error) {
+    console.log(error);
+    next(error); // Pass the error to middleware for better handling
+  }
+};

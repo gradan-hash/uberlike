@@ -138,7 +138,7 @@ export const GetAllOrderConfirmed = async (req, res, next) => {
 
 // Update an existing order
 export const UpdateOrder = async (req, res, next) => {
-  const { orderId } = req.params; // Correctly extracting orderId from req.params
+  const { orderId } = req.body.orderid; // Correctly extracting orderId from req.params
   console.log(req.body);
 
   try {

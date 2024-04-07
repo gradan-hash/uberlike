@@ -6,6 +6,7 @@ import {
   GetAllOrderConfirmed,
   UpdateCreateOrder,
   UpdateCreateOrderPaid,
+  UpdateOrder,
 } from "../../controllers/users/Order.js";
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.get("/getpickup/:userId", GetAllOrder);
 router.get("/getcompleted/:userId", GetAllcompletedOrder);
 router.get("/getpickupconfirmed/:id", GetAllOrderConfirmed);
 router.post("/updatefinishorder", UpdateCreateOrderPaid);
+router.post("/updaterating", UpdateOrder);
 
 export default router;
