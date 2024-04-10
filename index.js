@@ -71,6 +71,13 @@ app.use("/api/admin", UsersRoute);
 app.use("/api/admin", ProvidersRoute);
 app.use("/api/admin", OrderAdminRoute);
 
+app.get("/wake-up", (req, res) => {
+  res.json({
+    responseType: "success",
+    message: "Server is awake",
+  });
+});
+
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "something went wrong";
