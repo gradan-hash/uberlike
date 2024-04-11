@@ -5,8 +5,8 @@ import { DeleteUser, GetAllUsers } from "../../controllers/Admin/Client.js";
 
 const router = express.Router();
 
-router.get("/allusers", VerifyToken, GetAllUsers);
-router.delete("/delete/:userId", VerifyToken, DeleteUser);
+router.get("/allusers", GetAllUsers);
+router.delete("/delete/:userId", DeleteUser);
 
 // router.post("/accesstoken",VerifyToken)
 
