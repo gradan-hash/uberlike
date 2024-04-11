@@ -3,8 +3,12 @@ import createError from "../../utils/createError.js";
 
 export const GetAllOrders = async (req, res, next) => {
   try {
-    const Allorders = await Order.find({});
-    if (!Allorders) return "No order found";
+    const Allorders = await Order.find({ status: "Completed" });
+
+    if (Allorders.length === 0) {
+      return res.status(404).send("No completed orders found");
+    }
+
     res.status(200).send(Allorders);
   } catch (error) {
     console.log(error);
@@ -14,7 +18,7 @@ export const GetAllOrders = async (req, res, next) => {
 
 export const Charts = async (req, res, next) => {
   try {
-    const allOrders = await Order.find({});
+    const allOrders = await Order.find({ status: "Completed" });
 
     // Initialize an array to store chart data
     const chartData = [];
