@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import createError from "../../utils/createError.js";
 import Admin from "../../models/admin/Admin.js";
-
+import Complains from "../../models/Complains/Complains.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -21,6 +21,7 @@ export const register = async (req, res, next) => {
     next(err);
   }
 };
+
 
 export const login = async (req, res, next) => {
   try {

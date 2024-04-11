@@ -2,6 +2,7 @@ import user from "../../models/clients/Users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import createError from "../../utils/createError.js";
+import Complains from "../../models/Complains/Complains.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -9,6 +10,20 @@ export const register = async (req, res, next) => {
     const newUser = new user({
       ...req.body,
       password: hash,
+    });
+    console.log(newUser);
+    await newUser.save();
+    res.status(200).send("success");
+  } catch (err) {
+    console.error(err); // Log the complete error object
+    next(createError(500, "Registration failed!"));
+    next(err);
+  }
+};
+export const complains = async (req, res, next) => {
+  try {
+    const newUser = new Complains({
+      ...req.body,
     });
     console.log(newUser);
     await newUser.save();
